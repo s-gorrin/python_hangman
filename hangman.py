@@ -20,43 +20,15 @@ def clear():
     else:
         _ = system('clear')
 
-# Print the ascii hangman, along with the word progress and guessed letters
-def hang(wrong, letters, word_prog, word_stat):
-    if wrong == 0:
-        print '_____\n|   |\n|\n|\n|\n|\n|\n======'
-        print 'Guessed: _______'
-        print 'Progress: ' + word_prog
-    if wrong == 1:
-        print '_____\n|   |\n|   @\n|\n|\n|\n|\n======'
-        print 'Guessed: ' + letters + '______'
-        print 'Progress: ' + word_prog
-    if wrong == 2:
-        print '_____\n|   |\n|   @\n|   |\n|\n|\n|\n======'
-        print 'Guessed: ' + letters + '_____'
-        print 'Progress: ' + word_prog
-    if wrong == 3:
-        print '_____\n|   |\n|   @\n|  /|\n|\n|\n|\n======'
-        print 'Guessed: ' + letters + '____'
-        print 'Progress: ' + word_prog
-    if wrong == 4:
-        print '_____\n|   |\n|   @\n|  /|\\\n|\n|\n|\n======'
-        print 'Guessed: ' + letters + '___'
-        print 'Progress: ' + word_prog
-    if wrong == 5:
-        print '_____\n|   |\n|   @\n|  /|\\\n|   |\n|\n|\n======'
-        print 'Guessed: ' + letters + '__'
-        print 'Progress: ' + word_prog
-    if wrong == 6:
-        print '_____\n|   |\n|   @\n|  /|\\\n|   |\n|  /\n|\n======'
-        print 'Guessed: ' + letters + '_'
-        print 'Progress: ' + word_prog
-# On the seventh wrong guess, the man is complete and the game ends
-    if wrong == 7:
-        print '_____\n|   |\n|   @\n|  /|\\\n|   |\n|  / \\\n|\n======'
-        print 'Guessed: ' + letters
-        print 'Progress: ' + word_prog + '\nHe\'s dead, Jim.'
-        print 'The word was: ' + word_stat
-        exit()
+# These are the ascii hang men
+mans = ['_____\n|   |\n|\n|\n|\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|\n|\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|   |\n|\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|  /|\n|\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|  /|\\\n|\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|  /|\\\n|   |\n|\n|\n======\n',\
+        '_____\n|   |\n|   @\n|  /|\\\n|   |\n|  /\n|\n======\n',\
+        '_____\n|   |\n|   @\n|  /|\\\n|   |\n|  / \\\n|\n======\n']
 
 # Replace an underscore with a letter in the word progress
 def update_string(word_prog, i, guess):
@@ -148,7 +120,11 @@ while wrong < 7:
     clear()
 
 # Respond
-    hang(wrong, letters, word_prog, word_stat)
+    print mans[wrong] + 'Guessed: ' + letters + '_' * (7 - wrong)
+    print 'Progress: ' + word_prog
+    if wrong == 7:
+        print 'He\'s dead, Jim.\nThe word was: ' + word_stat
+        exit()
 
 # Win condition
     if word_prog == word_stat:
