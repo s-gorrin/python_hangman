@@ -14,6 +14,18 @@ Process:
     multiply every quantity by ratio
     generate new file "filename_updated" for recipe
     print new recipe
+
+Recipe format:
+    this code will assume that recipes are formatted
+    in the way that I always format recipes when I
+    write them down.
+    it expects a text file with one ingredient
+    per line, in the following format:
+        [number][unit][whitespace][ingredient]
+    for example:
+        256g    rice
+        1024ml  water
+    any method or instructions are expected to be at the end
 """
 
 class Entry(object):
