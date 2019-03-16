@@ -28,6 +28,8 @@ Recipe format:
     any method or instructions are expected to be at the end
 """
 
+import os
+
 class Entry(object):
     """
     Object: storage container for each line of recipe
@@ -85,6 +87,9 @@ def manage_change(recipe):
 
     Returns the ingredient to be changed
     """
+    if len(recipe) == 0:
+        print("I can't understand that recipe.")
+        quit()
     change = input("What ingredient would you like to change?\n> ")
     while True:
         partials = []
@@ -125,13 +130,45 @@ def get_ratio(recipe):
     return ratio
 
 
+def get_file():
+    """
+    Takes user input and finds the name of the recipe file.
+
+    Returns a filename of a file that exists, from user input.
+    """
+    file_list = []
+    for f in os.listdir():
+        if f[-4:] == ".txt" or "." not in f:
+            file_list.append(f)
+    print(", ".join(file_list))
+    while True:
+        partials = []
+        name = input("What is the name of the file?\n> ")
+        exists = os.path.isfile(name)
+        if exists:
+            return name
+        else:
+            for f in file_list:
+                if name in f:
+                    partials.append(f)
+        if partials == []:
+                print("That does not appear to be a recipe, please try again.")
+        elif len(partials) == 1:
+            return partials[0]
+        else:
+            print("Did you mean one of these?\n" +\
+                    ', '.join(partials))
+
 
 recipe = [] # The list of recipe elements
 method = '' # Everything thing in the file that is not ingredients
-
-# Take filename, open, read, parse recipe.
+"""
+files = get_files()
+print(", ".join(files))
 filename = input("What is the name of the file?\n> ")
-file_in = open(filename, 'r')
+"""
+# Take open, read, parse recipe.
+file_in = open(get_file(), 'r')
 for line in file_in:
     parsed = parse_line(line)
     if parsed:
