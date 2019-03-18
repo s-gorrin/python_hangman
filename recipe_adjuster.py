@@ -71,9 +71,12 @@ def parse_line(line):
             else:
                 num_done = True
                 ingr += c
-        unit = ingr[:ingr.index('\t')]
-        ingr = ingr[(ingr.index('\t') + 1):-1]
-        item = Entry(float(num), unit, ingr)
+        try:
+            unit = ingr[:ingr.index('\t')]
+            ingr = ingr[(ingr.index('\t') + 1):-1]
+            item = Entry(float(num), unit, ingr)
+        except ValueError:
+            return None
         return item
     else:
         return None
@@ -168,7 +171,8 @@ print(", ".join(files))
 filename = input("What is the name of the file?\n> ")
 """
 # Take open, read, parse recipe.
-file_in = open(get_file(), 'r')
+filename = get_file()
+file_in = open(filename, 'r')
 for line in file_in:
     parsed = parse_line(line)
     if parsed:
