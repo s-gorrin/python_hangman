@@ -1,6 +1,6 @@
 """
 Purpose:
-    to scale the size of a recipe based 
+    to scale the size of a recipe based
     on a different quantity of a single ingredient
 
 Algorithm:
@@ -30,6 +30,7 @@ Recipe format:
 
 import os
 
+
 class Entry(object):
     """
     Object: storage container for each line of recipe
@@ -39,12 +40,14 @@ class Entry(object):
         self.num = num
         self.unit = unit
         self.ingr = ingr
+
     def print_out(self):
         if int(self.num) == self.num:
             number = int(self.num)
         else:
             number = self.num
         print(str(number) + self.unit + '\t' + self.ingr)
+
     def __repr__(self):
         return str(self.num) + self.unit + '\t' + self.ingr + '\n'
 
@@ -64,7 +67,7 @@ def parse_line(line):
     num_done = False
     if line[0].isnumeric():
         for c in line:
-            if c.isnumeric() and num_done == False:
+            if c.isnumeric() and not num_done:
                 num += c
             elif c == '.':
                 num += c
@@ -102,12 +105,13 @@ def manage_change(recipe):
             elif change in item.ingr:
                 partials.append(item.ingr)
         if partials == []:
-            change = input("That item is not in the list, please try again.\n> ")
+            change = \
+                input("That item is not in the list, please try again.\n> ")
         elif len(partials) == 1:
             return partials[0]
         else:
-            change = input("Did you mean one of these? Please type the full name " +\
-                    ', '.join(partials) + "\n> ")
+            change = input("Did you mean one of these? "
+                "Please type the full name:\n" + ", ".join(partials) + "\n> ")
 
 
 def get_ratio(recipe):
@@ -155,16 +159,15 @@ def get_file():
                 if name in f:
                     partials.append(f)
         if partials == []:
-                print("That does not appear to be a recipe, please try again.")
+            print("That does not appear to be a recipe, please try again.")
         elif len(partials) == 1:
             return partials[0]
         else:
-            print("Did you mean one of these?\n" +\
-                    ', '.join(partials))
+            print("Did you mean one of these?\n" + ', '.join(partials))
 
 
-recipe = [] # The list of recipe elements
-method = '' # Everything thing in the file that is not ingredients
+recipe = []  # The list of recipe elements
+method = ''  # Everything thing in the file that is not ingredients
 """
 files = get_files()
 print(", ".join(files))
@@ -191,9 +194,9 @@ for item in recipe:
     if int(item.num * 10) % 10 == 0:
         item.num = int(item.num)
     adjusted_recipe.write(repr(item))
-    item.print_out() # Print finished recipe to the console
+    item.print_out()  # Print finished recipe to the console
 
-adjusted_recipe.write(method) # Write method to output file
+adjusted_recipe.write(method)  # Write method to output file
 print(method)
 
 file_in.close()
